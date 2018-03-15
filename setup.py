@@ -6,25 +6,29 @@ from setuptools import setup, find_packages
 import sys
 import warnings
 
-version = 0.1
-
 setup(
-    name='pymulticomm',
-    version=0.1,
-    author='Daniele Strollo',
-    author_email='daniele.strollo@gmail.com',
-    url='http://github.com/strollo/pydomotz',
-    packages=find_packages(),
-    scripts=[],
-    install_requires=dynamic_requires,
-    description='Lightweight multicast communication overlay library',
+    name='pydomus',
+    version='1.0.1',
+    author="Daniele Strollo",
+    author_email="daniele.strollo@gmail.com",
+    url='http://github.com/strollo/pydomus',
+    packages=find_packages(exclude=['tests','samples']),
+    description='Lightweight library for IoT sensors communicating via UDP Multicast',
+    keywords=["IoT", "Domotics", "Multicasting"],
+    platforms=['Windows', 'Linux', 'OSX'],
     classifiers=[
+        'License :: OSI Approved :: Apache Software License',
         'Development Status :: 1 - Beta',
-        'Intended Audience :: Developers - Nerds - Cat lovers',
-        'License :: OSI Approved :: MIT License',
+        'Intended Audience :: Developers',
         'Operating System :: OS Independent',
-        'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: IoT :: SmallComponents',
+        'Topic :: IoT :: Cheap HW',
+        'Topic :: IoT :: Communication',
     ],
     include_package_data=True,
+    license="http://www.apache.org/licenses/LICENSE-2.0",
     zip_safe=False,
 )
+
