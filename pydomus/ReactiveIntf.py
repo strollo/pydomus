@@ -43,7 +43,10 @@ class ReactiveIntf:
         reactions=self.getReactions(token)
         for reaction in reactions:
             self.logger.info('Reacting to token %s' % token)
-            reaction[1](self, notification)
+            try:
+                reaction[1](self, notification)
+            except Exception, e:
+                self.logger.error('Failed to react: ' + str(e))
 
 if __name__ == '__main__':
     ri = ReactiveIntf()
