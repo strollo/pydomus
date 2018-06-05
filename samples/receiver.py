@@ -2,6 +2,7 @@
 
 from context import *
 from multisock import logfactory
+from multisock import channel
 
 # Sample function that applies an operation (SUM/SUB/DIV/MUL) to
 # two given numbers.
@@ -35,7 +36,8 @@ def main():
     # name, mcastIP, mcastPort
     logger = logfactory.LogFactory('c1', 'logs/receiver')
     logger.info('Instantiating Receiver Sample')
-    c=Component('c1', '224.1.1.1', 1234, logger)
+    ch=channel.Channel('224.1.1.1', 1234, logger=logger, crypto=DataCrypto('key', 'passphrase'))
+    c=Component('c1', ch)
     ##########################################
     # REACTION
     ##########################################

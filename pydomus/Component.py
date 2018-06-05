@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from multisock import *
-from multisock import channel
+from multisock import channel as multiChannel
+from multisock import logfactory
 from SyncQueue import SyncQueue
 from ReactiveIntf import ReactiveIntf
 from Notification import Notification
@@ -22,7 +23,6 @@ def thNetToQueue(component):
     '''
     component.logger.info('Instantiated [thNetToQueue]')
     while True:
-        #component.logger.info('Read from channel')
         data = component.channel.recv()
         component.msgQueue.push(data)
 
@@ -51,7 +51,7 @@ def thMainLoop(component):
 ###################################################################################################
 
 class Component(ReactiveIntf):
-    def __init__(self, name, mcastIP, mcastPort, logger=None):
+    def __init__(self, name, ch):
         '''
         Create a component with a label (name) and multicast connection parameters.
         :param name: a short name identifying the component (uniqueness not guaranteed)
@@ -62,15 +62,15 @@ class Component(ReactiveIntf):
 
         # Parameters
         if name is None: raise ValueError('Invalid name parameter')
-        if mcastIP is None: raise ValueError('Invalid mcastIP parameter')
-        if mcastPort is None or not isinstance(mcastPort, int) : raise ValueError('Invalid mcastPort parameter')
+        if ch is None: raise ValueError('Invalid channel parameter')
+        if not isinstance(ch, multiChannel.Channel): raise ValueError('Invalid channel type')
         self.msgQueue=SyncQueue()
-        self.channel=channel.Channel(mcastIP, mcastPort, 1024)
+        self.channel=ch
         self.name=name.strip()
-        if logger is not None:
-            self.logger=logger
+        if ch.logger is not None:
+            self.logger=ch.logger
         else:
-            self.logger=LogFactory(self.name)
+            self.logger=logfactory.LogFactory(self.name)
         self._loop = None
         # Super instantiation
         ReactiveIntf.__init__(self)
