@@ -110,7 +110,7 @@ The message will be converted in the following **json** representation:
 
 ```json
 {
-  "token": "/arithm/calc/sum"
+  "token": "/arithm/calc/sum",
   "payload": {
     "p1": 121,
     "p2": 231
