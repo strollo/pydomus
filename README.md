@@ -47,16 +47,27 @@ Suppose to have:
 - a component (**Requester**) requiring to sum two numbers (such parameters are passed in the event as **p1** and **p2**). 
 - a component (**Calculator**) able to apply this operation and return the result in the form of new event.
 
+Components are instantiated by simply connecting them to a [MultiSock](https://github.com/strollo/multisock) channel.
+
 ![protocol representation](resources/protocol.png)
+
+#### Channel instantiation
+
+```python
+from multisock import channel
+# Creates a channel with crypto option
+# All the participants must instantiate channel with the same key/passphrase to access data
+chan=channel.Channel('224.1.1.1', 1234, crypto=DataCrypto('key', 'passphrase'))  
+```
+
+* the **crypto** parameter is optional and can be used to apply encryption of exchanged data among components.
 
 #### Component instantiation
 
-Components are instantiated by simply connecting them to a [MultiSock](https://github.com/strollo/multisock) channel.  
-
 ```python
 # Both components connected to the same multisock channel
-calculator=Component('calculator', '224.1.1.1', 1234)
-requester=Component('calculator', '224.1.1.1', 1234)
+calculator=Component('calculator', chan)
+requester=Component('requester', chan)
 ```
 
 #### Main Loop
@@ -99,7 +110,7 @@ The message will be converted in the following **json** representation:
 
 ```json
 {
-  "token": "/arithm/calc/sum"
+  "token": "/arithm/calc/sum",
   "payload": {
     "p1": 121,
     "p2": 231

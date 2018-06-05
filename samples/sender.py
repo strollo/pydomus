@@ -2,6 +2,7 @@
 
 from context import *
 from multisock import logfactory
+from multisock import channel
 import random
 
 def printResult(parent, evt):
@@ -28,9 +29,11 @@ def loop(component):
 
 def main():
     # name, mcastIP, mcastPort
-    logger = logfactory.LogFactory('c2', 'logs/sender')
+    logger = logfactory.LogFactory('sendr', 'logs/sender')
     logger.info('Instantiating Sender Sample')
-    c=Component('c1', '224.1.1.1', 1234, logger)
+
+    ch=channel.Channel('224.1.1.1', 1234, logger=logger, crypto=DataCrypto('key', 'passphrase'))
+    c=Component('sendr', ch)
     # ACTIVE LOOP
     c.setLoop(loop)
     # REACTIONS
