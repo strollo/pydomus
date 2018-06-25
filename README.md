@@ -170,3 +170,38 @@ def handleResult(component, evt):
         print 'Received invalid data'    
 ```
 
+# Using .ini configuration
+
+It is possible to instantiate components, channels and loggers by specifying the parameters in a **.ini** file and by demanding their creation to the
+***ConfigLoader*** builder.
+
+## Sample config file
+
+```ini
+[Channel]
+;; Multicast channel connection
+mcast_ip=224.1.1.1      ;; the multicast udp address (required)
+mcast_port=1234         ;; the multicast udp port (required)
+
+;;;; -- DATA CRYPT --
+;; the key/passphrase couple if required a crypted connection (optional)
+key1=key                
+key2=passphrase
+
+[Component]
+name=calendar           ;; the component readable name (required)
+id=/pyds/gcal           ;; the unique id of the component in the network (optional)
+
+[Logger]
+path=logs               ;; the path where to store logs (required)
+filename=calendar       ;; the filename to use for logs (optional - component name will be used alternatively)
+```
+
+## Instantiating via ConfigLoader
+
+```python
+from pydomus import ConfigLoader
+
+builder=ConfigLoader('conf.ini')
+component=builder.buildComponent()  # And that's all ;)
+```

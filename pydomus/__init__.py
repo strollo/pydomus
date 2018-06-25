@@ -21,7 +21,7 @@ from Notification import Notification
 from Pattern import Pattern
 
 # The list of components implicitly imported by library
-__all__ = [ 'Component', 'Notification', 'Pattern' ]
+__all__ = [ 'Component', 'Notification', 'Pattern', 'ConfigLoader' ]
 
-version = "1.0.2"
-version_info = (1, 0, 2, 0)
+version = "1.0.3"
+version_info = (1, 0, 3, 0)

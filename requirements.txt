@@ -4,3 +4,4 @@ argparse
 multisock>1.0.0
 threading
 pickle
+ConfigParser
